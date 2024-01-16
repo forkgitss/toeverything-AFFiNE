@@ -31,6 +31,7 @@ model User {
   connectedAccounts    ConnectedAccount[]
   sessions             UserSession[]
   aiSessions           AiSession[]
+  AppRuntimeSetting    AppRuntimeSetting[]
 
   @@index([email])
   @@map("users")
@@ -501,4 +502,20 @@ model DataMigration {
   finishedAt DateTime? @map("finished_at") @db.Timestamptz(6)
 
   @@map("_data_migrations")
+}
+
+model AppRuntimeSetting {
+  id            String    @id @db.VarChar
+  module        String    @db.VarChar
+  key           String    @db.VarChar
+  value         Json      @db.Json
+  description   String    @db.Text
+  updatedAt     DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
+  deletedAt     DateTime? @map("deleted_at") @db.Timestamptz(6)
+  lastUpdatedBy String?   @map("last_updated_by") @db.VarChar(36)
+
+  lastUpdatedByUser User? @relation(fields: [lastUpdatedBy], references: [id])
+
+  @@unique([module, key])
+  @@map("app_runtime_settings")
 }

@@ -17,7 +17,7 @@ test.afterEach.always(async () => {
 });
 
 test('should be able to get config', t => {
-  t.true(typeof config.host === 'string');
+  t.true(typeof config.server.host === 'string');
   t.is(config.NODE_ENV, 'test');
 });
 
@@ -25,11 +25,13 @@ test('should be able to override config', async t => {
   const module = await Test.createTestingModule({
     imports: [
       ConfigModule.forRoot({
-        host: 'testing',
+        server: {
+          host: 'testing',
+        },
       }),
     ],
   }).compile();
   const config = module.get(Config);
 
-  t.is(config.host, 'testing');
+  t.is(config.server.host, 'testing');
 });
