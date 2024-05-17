@@ -84,6 +84,22 @@ export const prompts: Prompt[] = [
     messages: [],
   },
   {
+    name: 'debug:action:fal-sdturbo-clay',
+    action: 'image',
+    model: 'fast-turbo-diffusion',
+    messages: [
+      {
+        role: 'user',
+        content: 'claymation, clay, {{content}}',
+        params: {
+          lora: [
+            'https://models.affine.pro/fal/Clay_AFFiNEAI_SDXL1_CLAYMATION.safetensors',
+          ],
+        },
+      },
+    ],
+  },
+  {
     name: 'Summary',
     action: 'Summary',
     model: 'gpt-4o',
