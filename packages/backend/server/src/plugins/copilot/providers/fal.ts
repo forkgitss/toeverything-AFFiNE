@@ -73,10 +73,10 @@ export class FalProvider
   private extractPrompt(message?: PromptMessage): FalPrompt {
     if (!message) throw new Error('Prompt is empty');
     const { content, attachments, params } = message;
+    // prompt attachments require at least one
     if (!content && (!Array.isArray(attachments) || !attachments.length)) {
       throw new Error('Prompt or Attachments is empty');
     }
-    // prompt attachments require at least one
     if (Array.isArray(attachments) && attachments.length > 1) {
       throw new Error('Only one attachment is allowed');
     }
@@ -90,7 +90,7 @@ export class FalProvider
     return {
       image_url: attachments?.[0],
       prompt: content || undefined,
-      lora,
+      lora: lora.length ? lora : undefined,
     };
   }
 
